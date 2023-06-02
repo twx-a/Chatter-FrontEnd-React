@@ -1,37 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import NewChat from './newchat/newChatter.jsx';
-
+import React, { useState } from 'react';
+import NewChatter from './newchat/newChatter';
+import EditChatter from './editchat/editChatter';
+import DeleteChatter from './deletechat/deleteChatter';
+import chatsData from './data/chatterData';
 
 const Chatter = () => {
-    const [chats, setChats] = useState([]);
-    console.log(chats);
+    const [chatters, setChatters] = useState(chatsData);
+    const [showNewChat, setShowNewChat] = useState(false);
+    const [editChatter, setEditChatter] = useState(null);
+    const [deleteChatter, setDeleteChatter] = useState(null);
 
-    useEffect(() => {
-        const fetchChats = async () => {
-            try {
-                const response = await fetch("./data/chats.js");
-                const data = await response.json();
-                console.log(data);
-                // setTweets(data);
-            } catch (error) {
-                console.error('Error fetching tweets:', error);
-            }
-        };
-        fetchChats();
-    }, []);
+    const handleNewChatter = (newChatter) => {
+        const newChatters = [...chatters, newChatter];
+        setChatters(newChatters);
+        setShowNewChat(false);
+    };
 
-    const handleNewChat = (newChat) => {
-        setChats([...chats, newChat]);
+    const handleEditChatter = (chatter) => {
+        setEditChatter(chatter);
+    };
+
+    const handleUpdateChatter = (updatedChatter) => {
+        const updatedChatters = chatters.map((chatter) =>
+            chatter.id === updatedChatter.id ? updatedChatter : chatter
+        );
+        setChatters(updatedChatters);
+        setEditChatter(null);
+    };
+
+    const handleDeleteChatter = (chatterId) => {
+        const updatedChatters = chatters.filter((chatter) => chatter.id !== chatterId);
+        setChatters(updatedChatters);
+        setDeleteChatter(null);
     };
 
     return (
         <div>
-            <NewChat onNewChat={handleNewChat} />
-            <div>
-                {chats.map((index, chat) => (
-                    <div key={index}>{chat}</div>
-                ))}
-            </div>
+            <h1>Chatter</h1>
+            <button onClick={() => setShowNewChat(true)}>New Chatter</button>
+
+            {showNewChat && (
+                <NewChatter onNewChatter={handleNewChatter} onCancel={() => setShowNewChat(false)} />
+            )}
+
+            {chatters.map((chatter) => (
+                <div key={chatter.id}>
+                    <div>{chatter.content}</div>
+                    <div>By: {chatter.name}</div>
+                    <button onClick={() => handleEditChatter(chatter)}>Edit</button>
+                    <button onClick={() => setDeleteChatter(chatter)}>Delete</button>
+                </div>
+            ))}
+
+            {editChatter && (
+                <EditChatter
+                    chatter={editChatter}
+                    onEditChatter={handleUpdateChatter}
+                    onCancel={() => setEditChatter(null)}
+                />
+            )}
+
+            {deleteChatter && (
+                <DeleteChatter
+                    chatter={deleteChatter}
+                    onDeleteChatter={handleDeleteChatter}
+                    onCancel={() => setDeleteChatter(null)}
+                />
+            )}
         </div>
     );
 };

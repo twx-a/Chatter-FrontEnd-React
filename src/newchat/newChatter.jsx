@@ -1,26 +1,47 @@
 import React, { useState } from 'react';
 
-const NewChat = ({ onNewChat }) => {
-    const [newChat, setNewChat] = useState('');
+const NewChatter = ({ onNewChatter, onCancel }) => {
+    const [newContent, setNewContent] = useState('');
+    const [newName, setNewName] = useState('');
 
-    const handleNewTweet = () => {
-        if (newChat.trim() !== '') {
-            onNewChat(newChat);
-            setNewChat('');
+    const handleNewChatter = () => {
+        if (newContent.trim() !== '' && newName.trim() !== '') {
+            const newChatter = {
+                id: Date.now(),
+                content: newContent,
+                name: newName,
+            };
+            onNewChatter(newChatter);
+            setNewContent('');
+            setNewName('');
         }
     };
 
     return (
         <div>
-            <input
-                type="text"
-                value={newChat}
-                onChange={(e) => setNewChat(e.target.value)}
-                placeholder="What's happening?"
-            />
-            <button onClick={handleNewTweet}>Tweet</button>
+            <h2>New Chatter</h2>
+            <div>
+                <input
+                    type="text"
+                    value={newContent}
+                    onChange={(e) => setNewContent(e.target.value)}
+                    placeholder="Enter content"
+                />
+            </div>
+            <div>
+                <input
+                    type="text"
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    placeholder="Enter name"
+                />
+            </div>
+            <div>
+                <button onClick={handleNewChatter}>Create Chatter</button>
+                <button onClick={onCancel}>Cancel</button>
+            </div>
         </div>
     );
 };
 
-export default NewChat;
+export default NewChatter;
