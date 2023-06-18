@@ -1,7 +1,24 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const NewUser = ({onNewUser}) => {
+
+    useEffect(() => {
+        const postData = async () => {
+            const response = await fetch('http://localhost:3001/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: name,
+                    password: password,
+                }),
+            });
+            const data = await response.json();
+            console.log(data);
+        }
+    }, []);
 
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
@@ -35,7 +52,7 @@ const NewUser = ({onNewUser}) => {
             <label htmlFor="name">Name</label>
             <input type="text" id="name" name="name" value={name} onChange={handleNameChange} />
             <label htmlFor="password">Password</label>
-            <input type="text" id="password" name="password" value={password} onChange={handlePasswordChange} />
+            <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange} />
             <button type="submit" onClick={handleNewUser}>Submit</button>
         </form>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const NewChatter = ({ onNewChatter, onCancel }) => {
     const [newContent, setNewContent] = useState('');
@@ -26,14 +26,6 @@ const NewChatter = ({ onNewChatter, onCancel }) => {
                     value={newContent}
                     onChange={(e) => setNewContent(e.target.value)}
                     placeholder="Enter content"
-                />
-            </div>
-            <div>
-                <input
-                    type="text"
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                    placeholder="Enter name"
                 />
             </div>
             <div>
