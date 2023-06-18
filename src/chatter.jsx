@@ -51,7 +51,7 @@ const Chatter = () => {
                     <button onClick={() => setDeleteChatter(chatter)}>Delete</button>
                 </div>
             ))}
-
+         
             {editChatter && (
                 <EditChatter
                     chatter={editChatter}
@@ -67,6 +67,7 @@ const Chatter = () => {
                     onCancel={() => setDeleteChatter(null)}
                 />
             )}
+            {/* To do: Comments. */}
         </div>
     );
 };
