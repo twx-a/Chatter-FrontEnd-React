@@ -3,6 +3,7 @@ import NewChatter from './newchat/newChatter';
 import EditChatter from './editchat/editChatter';
 import DeleteChatter from './deletechat/deleteChatter';
 import chatsData from './data/chatterData';
+import styles from './chatter.module.css';
 
 const Chatter = () => {
     const [chatters, setChatters] = useState(chatsData);
@@ -35,23 +36,27 @@ const Chatter = () => {
     };
 
     return (
-        <div>
+        <div className={styles["main-container"]}>
             <h1>Chatter</h1>
-            <button onClick={() => setShowNewChat(true)}>New Chatter</button>
+            <button className={styles.button} onClick={() => setShowNewChat(true)}>New Chatter</button>
 
             {showNewChat && (
                 <NewChatter onNewChatter={handleNewChatter} onCancel={() => setShowNewChat(false)} />
             )}
 
             {chatters.map((chatter) => (
-                <div key={chatter.id}>
-                    <div>{chatter.content}</div>
-                    <div>By: {chatter.name}</div>
-                    <button onClick={() => handleEditChatter(chatter)}>Edit</button>
-                    <button onClick={() => setDeleteChatter(chatter)}>Delete</button>
+                <div className={styles["post-container"]}>
+                    <div key={chatter.id}>
+                        <p className={styles["post-content"]}>{chatter.content}</p>
+                        <p className={styles["post-content"]}>By: {chatter.name}</p>
+                    </div>
+                    <div className={styles["button-container"]}>
+                        <button className={styles.button} onClick={() => handleEditChatter(chatter)}>Edit</button>
+                        <button className={styles.button} onClick={() => setDeleteChatter(chatter)}>Delete</button>
+                    </div>
                 </div>
             ))}
-         
+
             {editChatter && (
                 <EditChatter
                     chatter={editChatter}
@@ -67,7 +72,6 @@ const Chatter = () => {
                     onCancel={() => setDeleteChatter(null)}
                 />
             )}
-            {/* To do: Comments. */}
         </div>
     );
 };
