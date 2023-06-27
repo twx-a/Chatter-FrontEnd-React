@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 
 const Login = ({ handleLogin }) => {
     const [username, setUsername] = useState('');
@@ -20,32 +20,36 @@ const Login = ({ handleLogin }) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: username,
+                    username: username,
                     password: password,
                 }),
             });
             const data = await response.json();
 
             if (response.ok) {
-                console.log('User created successfully');
-                return data.token;
+                // Save the JWT to localStorage
+                console.log('Login successful');
+                localStorage.setItem('token', data.loginToken);
             } else {
-                throw new Error(data.message || 'Error creating user');
+                throw new Error(data.message || 'Login failed');
             }
         } catch (err) {
             console.log(err.message);
         }
     }
+
     return (
-        <div>
+        <Fragment>
             <form onSubmit={loginUser}>
                 <label htmlFor="username">Username</label>
                 <input type="text" onChange={handleUsernameChange} value={username} id="username" name="username" />
                 <label htmlFor="password">Password</label>
                 <input type="password" onChange={handlePasswordChange} value={password} id="password" name="password" />
+                <input type="checkbox" id="rememberMe" name="rememberMe" />
+                <label htmlFor='rememberMe'>Remember Me</label>
                 <button type="submit" onClick={handleLogin}>Submit</button>
             </form>
-        </div>
+        </Fragment>
     )
 }
 

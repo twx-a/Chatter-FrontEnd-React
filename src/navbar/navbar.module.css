@@ -30,26 +30,18 @@
     cursor: pointer;
 }
 
-.login-container {
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
 
-.login-container input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.login-container button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
+.dropdownMenu {
+    display: block;
+    position: absolute;
+    right: 0; /* aligns the dropdown to the right of the button */
+    background-color: #f1f1f1;
+    min-width: 160px;
+    z-index: 1;
+    padding: 0.4rem;
+    border-radius: 8px;
 }

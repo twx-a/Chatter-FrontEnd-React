@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './navbar.module.css';
 import Login from '../users/login.jsx';
 
 const Navbar = () => {
-
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const [activeButton, setActiveButton] = useState(false);
+    const [loggedIn, setLoggedIn] = useState();
+
 
     return (
         <nav className={styles.navbar}>
@@ -22,8 +21,10 @@ const Navbar = () => {
                     <Link to="/Profile">Profile</Link>
                 </li>
             </ul>
-            <button onClick={() => setActiveButton(!activeButton)}>Login</button>
-            {activeButton && <Login />}
+            <div className={styles.dropdown}>
+                <button onClick={() => setActiveButton(!activeButton)}>Login</button>
+                {activeButton && <div className={styles.dropdownMenu}><Login /></div>}
+            </div>
         </nav>
     )
 };

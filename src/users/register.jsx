@@ -1,10 +1,12 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const NewUser = () => {
 
     const handleNewUser = async (e) => {
         e.preventDefault();
+        console.log('username: ' + username);
+        console.log('password: ' + password);
         try {
             const response = await fetch('http://localhost:4000/api/users/register', {
                 method: 'POST',
@@ -12,7 +14,7 @@ const NewUser = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: username,
+                    username: username,
                     password: password,
                 }),
             });
