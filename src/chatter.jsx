@@ -1,15 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NewChatter from './newchat/newChatter';
 import EditChatter from './editchat/editChatter';
 import DeleteChatter from './deletechat/deleteChatter';
-import chatsData from './data/chatterData';
 import styles from './chatter.module.css';
 
 const Chatter = () => {
-    const [chatters, setChatters] = useState(chatsData);
+
+    const [chatters, setChatters] = useState([]);
     const [showNewChat, setShowNewChat] = useState(false);
     const [editChatter, setEditChatter] = useState(null);
     const [deleteChatter, setDeleteChatter] = useState(null);
+
+
+    useEffect(() => {
+        const fetchChatter = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/api/contents/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    const currentDatetime = new Date();
+                    console.log('Data fetched successfully at ' + currentDatetime + '.');
+                    console.log(data);
+                    setChatters(data.content);
+                } else {
+                    throw new Error(data.message || 'Failed to fetch data');
+                }
+            } catch (err) {
+                console.log(err.message);
+            }
+        }
+
+        // Call the fetch function immediately
+        fetchChatter();
+
+        // Call it again every 60 seconds
+        const intervalId = setInterval(fetchChatter, 60000);
+
+        // Cleanup function to clear the interval when the component unmounts
+        return () => clearInterval(intervalId);
+    }, []);  // Empty dependency array so the effect only runs on mount and unmount
+
 
     const handleNewChatter = (newChatter) => {
         const newChatters = [...chatters, newChatter];
@@ -45,10 +81,10 @@ const Chatter = () => {
             )}
 
             {chatters.map((chatter) => (
-                <div className={styles["post-container"]}>
-                    <div key={chatter.id}>
-                        <p className={styles["post-content"]}>{chatter.content}</p>
-                        <p className={styles["post-content"]}>By: {chatter.name}</p>
+                <div key={chatter._id} className={styles["post-container"]}>
+                    <div>
+                        <p className={styles["post-content"]}>{chatter.userinput}</p>
+                        <p className={styles["post-content"]}>By: {chatter.userId.username}</p>
                     </div>
                     <div className={styles["button-container"]}>
                         <button className={styles.button} onClick={() => handleEditChatter(chatter)}>Edit</button>

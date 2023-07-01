@@ -10,7 +10,6 @@ const Login = ({ handleLogin }) => {
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     };
-
     const loginUser = async (e) => {
         e.preventDefault();
         try {

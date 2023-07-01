@@ -4,22 +4,24 @@ import Profile from './users/profile.jsx';
 import Register from './users/register.jsx';
 import Navbar from './navbar/navbar.jsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import UserState from './contexts/UserState.jsx';
+import UserContext from './contexts/UserContext.js';
 
 const App = () => {
   return (
-    <UserState>
+    <UserContext.Provider value={{
+      isLoggedIn:false
+      }}>
       <Router>
         <div>
           <Navbar />
           <Routes>
             <Route path="/" element={<Chatter />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/Profile" element={<Profile />} />
+            <Route path="/Register" element={<Register />} />
           </Routes>
         </div>
       </Router>
-    </UserState>
+    </UserContext.Provider>
   );
 };
 
