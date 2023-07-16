@@ -37,14 +37,13 @@ const Chatter = () => {
         // Call the fetch function immediately
         fetchChatter();
 
-        // Call it again every 30 seconds
+        // Call it again every 60 seconds
         const intervalId = setInterval(fetchChatter, 60000);
 
         // Cleanup function to clear the interval when the component unmounts
         return () => clearInterval(intervalId);
     }, []);  // Empty dependency array so the effect only runs on mount and unmount
 
-    // NewChatter
     const handleNewChatter = (newChatter) => {
         const newChatters = [...chatters, newChatter];
         setChatters(newChatters);
@@ -84,9 +83,9 @@ const Chatter = () => {
 
             {/* Mapping fetched data.content from chatter */}
             {chatters.map((chatter) => (
-                <div className={styles["post-container"]} key={chatter._id}>
+                <div key={chatter._id} className={styles["post-container"]}>
                     <div>
-                        <p className={styles["post-content"]}>{chatter.userInput}</p>
+                        <p className={styles["post-content"]}>{chatter.userinput}</p>
                         <p className={styles["post-content"]}>By: {chatter.userId.username}</p>
                     </div>
                     <div className={styles["button-container"]}>
