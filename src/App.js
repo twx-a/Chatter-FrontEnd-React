@@ -4,11 +4,11 @@ import Profile from './users/profile.jsx';
 import Register from './users/register.jsx';
 import Navbar from './navbar/navbar.jsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import UserState from './contexts/UserState.jsx';
+// import UserContext from './contexts/UserContext.jsx';
 
 const App = () => {
   return (
-    <UserState>
+    // <UserContext.Provider>
       <Router>
         <div>
           <Navbar />
@@ -19,7 +19,7 @@ const App = () => {
           </Routes>
         </div>
       </Router>
-    </UserState>
+    // </UserContext.Provider>
   );
 };
 

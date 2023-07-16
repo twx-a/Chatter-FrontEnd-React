@@ -1,8 +1,11 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 
-const Login = ({ handleLogin }) => {
+const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const ctx = useContext(UserContext);
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
@@ -29,7 +32,9 @@ const Login = ({ handleLogin }) => {
             if (response.ok) {
                 // Save the JWT to localStorage
                 console.log('Login successful');
-                localStorage.setItem('token', data.loginToken);
+                localStorage.setItem('loginToken', JSON.stringify(data.loginToken));
+                ctx.onLogin();
+                ctx.onDropdown();
             } else {
                 throw new Error(data.message || 'Login failed');
             }
@@ -47,7 +52,7 @@ const Login = ({ handleLogin }) => {
                 <input type="password" onChange={handlePasswordChange} value={password} id="password" name="password" />
                 <input type="checkbox" id="rememberMe" name="rememberMe" />
                 <label htmlFor='rememberMe'>Remember Me</label>
-                <button type="submit" onClick={handleLogin}>Submit</button>
+                <button type="submit">Submit</button>
             </form>
         </Fragment>
     )
