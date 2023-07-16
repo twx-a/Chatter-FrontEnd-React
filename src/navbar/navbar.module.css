@@ -1,0 +1,47 @@
+.navbar {
+    background-color: #007bff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.navbar ul li {
+    color: #fff;
+}
+
+.navbar ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar button {
+    background-color: #fff;
+    color: #007bff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownMenu {
+    display: block;
+    position: absolute;
+    right: 0; /* aligns the dropdown to the right of the button */
+    background-color: #f1f1f1;
+    /* min-width: 160px; */
+    z-index: 1;
+    padding: 0.4rem;
+    border-radius: 8px;
+}

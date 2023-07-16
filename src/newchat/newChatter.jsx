@@ -29,14 +29,6 @@ const NewChatter = ({ onNewChatter, onCancel }) => {
                 />
             </div>
             <div>
-                <input
-                    type="text"
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                    placeholder="Enter name"
-                />
-            </div>
-            <div>
                 <button onClick={handleNewChatter}>Create Chatter</button>
                 <button onClick={onCancel}>Cancel</button>
             </div>

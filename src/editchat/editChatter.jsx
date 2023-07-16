@@ -2,19 +2,16 @@ import React, { useState, useEffect } from 'react';
 
 const EditChatter = ({ chatter, onEditChatter, onCancel }) => {
     const [editedContent, setEditedContent] = useState(chatter.content);
-    const [editedName, setEditedName] = useState(chatter.name);
 
     useEffect(() => {
         setEditedContent(chatter.content);
-        setEditedName(chatter.name);
     }, [chatter]);
 
     const handleEditChatter = () => {
-        if (editedContent.trim() !== '' && editedName.trim() !== '') {
+        if (editedContent.trim() !== '') {
             const updatedChatter = {
                 ...chatter,
                 content: editedContent,
-                name: editedName,
             };
             onEditChatter(updatedChatter);
         }
@@ -29,14 +26,6 @@ const EditChatter = ({ chatter, onEditChatter, onCancel }) => {
                     value={editedContent}
                     onChange={(e) => setEditedContent(e.target.value)}
                     placeholder="Enter content"
-                />
-            </div>
-            <div>
-                <input
-                    type="text"
-                    value={editedName}
-                    onChange={(e) => setEditedName(e.target.value)}
-                    placeholder="Enter name"
                 />
             </div>
             <div>
