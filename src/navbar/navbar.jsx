@@ -19,12 +19,16 @@ const Navbar = () => {
                 <li>
                     <Link to="/">Chatter</Link>
                 </li>
+                {!ctx.isLoggedIn &&
                 <li>
                     <Link to="/register">Register</Link>
                 </li>
+                }
+                {ctx.isLoggedIn &&
                 <li>
                     <Link to="/Profile">Profile</Link>
                 </li>
+                }
             </ul>
             {ctx.isLoggedIn && <div className={styles.dropdown}>
                 <button onClick={() => ctx.onDropdown()}>{loginToken?.username}</button>

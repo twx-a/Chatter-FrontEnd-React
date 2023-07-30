@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import NewChatter from './newchat/newChatter';
 import EditChatter from './editchat/editChatter';
 import DeleteChatter from './deletechat/deleteChatter';
 import styles from './chatter.module.css';
+import UserContext from './contexts/UserContext';
 
 const Chatter = () => {
 
@@ -10,6 +11,7 @@ const Chatter = () => {
     const [showNewChat, setShowNewChat] = useState(false);
     const [editChatter, setEditChatter] = useState(null);
     const [deleteChatter, setDeleteChatter] = useState(null);
+    const ctx = useContext(UserContext);
 
     useEffect(() => {
         const fetchChatter = async () => {
@@ -75,7 +77,7 @@ const Chatter = () => {
         <div className={styles["main-container"]}>
             <h1>Chatter</h1>
             <button className={styles.button} onClick={() => setShowNewChat(true)}>New Chatter</button>
-            
+
             {/* Handle New */}
             {showNewChat && (
                 <NewChatter onNewChatter={handleNewChatter} onCancel={() => setShowNewChat(false)} />
@@ -88,9 +90,15 @@ const Chatter = () => {
                         <p className={styles["post-content"]}>{chatter.userinput}</p>
                         <p className={styles["post-content"]}>By: {chatter.userId.username}</p>
                     </div>
+                    {/* Check if the post username is same as the current logged in user */}
+                    {console.log(ctx.username())}
                     <div className={styles["button-container"]}>
-                        <button className={styles.button} onClick={() => handleEditChatter(chatter)}>Edit</button>
-                        <button className={styles.button} onClick={() => setDeleteChatter(chatter)}>Delete</button>
+                        {chatter.userId.username === ctx.username() && (
+                            <>
+                                <button className={styles.button} onClick={() => handleEditChatter(chatter)}>Edit</button>
+                                <button className={styles.button} onClick={() => setDeleteChatter(chatter)}>Delete</button>
+                            </>
+                        )}
                     </div>
                 </div>
             ))}
