@@ -60,7 +60,7 @@ const Chatter = () => {
     //Update Chatter
     const handleUpdateChatter = (updatedChatter) => {
         const updatedChatters = chatters.map((chatter) =>
-            chatter.id === updatedChatter.id ? updatedChatter : chatter
+            chatter._id === updatedChatter._id ? updatedChatter : chatter
         );
         setChatters(updatedChatters);
         setEditChatter(null);
@@ -68,7 +68,7 @@ const Chatter = () => {
 
     //Delete Chatter
     const handleDeleteChatter = (chatterId) => {
-        const updatedChatters = chatters.filter((chatter) => chatter.id !== chatterId);
+        const updatedChatters = chatters.filter((chatter) => chatter._id !== chatterId);
         setChatters(updatedChatters);
         setDeleteChatter(null);
     };
@@ -76,12 +76,17 @@ const Chatter = () => {
     return (
         <div className={styles["main-container"]}>
             <h1>Chatter</h1>
+            {ctx.isLoggedIn && (
             <button className={styles.button} onClick={() => setShowNewChat(true)}>New Chatter</button>
-
-            {/* Handle New */}
-            {showNewChat && (
-                <NewChatter onNewChatter={handleNewChatter} onCancel={() => setShowNewChat(false)} />
             )}
+
+            {
+            // handle new chat
+                showNewChat && (
+                <NewChatter onNewChatter={handleNewChatter} onCancel={() => setShowNewChat(false)} />
+            )
+            }
+            
 
             {/* Mapping fetched data.content from chatter */}
             {chatters.map((chatter) => (
@@ -91,9 +96,8 @@ const Chatter = () => {
                         <p className={styles["post-content"]}>By: {chatter.userId.username}</p>
                     </div>
                     {/* Check if the post username is same as the current logged in user */}
-                    {console.log(ctx.username())}
                     <div className={styles["button-container"]}>
-                        {chatter.userId.username === ctx.username() && (
+                        {chatter.userId.username === ctx.username && (
                             <>
                                 <button className={styles.button} onClick={() => handleEditChatter(chatter)}>Edit</button>
                                 <button className={styles.button} onClick={() => setDeleteChatter(chatter)}>Delete</button>

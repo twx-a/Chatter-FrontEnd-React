@@ -32,7 +32,7 @@ const Login = () => {
                 // Save the JWT to localStorage
                 console.log('Login successful');
                 localStorage.setItem('loginToken', JSON.stringify(data.loginToken));
-                ctx.onLogin(username);
+                ctx.onLogin(data.loginToken.username, data.loginToken.userId);
                 ctx.onDropdown();
             } else {
                 throw new Error(data.message || 'Login failed');

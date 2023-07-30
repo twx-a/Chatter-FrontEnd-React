@@ -1,16 +1,15 @@
-import React, { useState,useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './navbar.module.css';
 import Login from '../users/login.jsx';
 import UserContext from '../contexts/UserContext';
 
 const Navbar = () => {
-    const [loginToken, setLoginToken] = useState(null);
     const ctx = useContext(UserContext);
 
-    useEffect(() => {
-        setLoginToken(JSON.parse(localStorage.getItem('loginToken')));
-    }, [ctx.isLoggedIn]);
+    // useEffect(() => {
+    //     setLoginToken(JSON.parse(localStorage.getItem('loginToken')));
+    // }, [ctx.isLoggedIn]);
 
 
     return (
@@ -31,7 +30,7 @@ const Navbar = () => {
                 }
             </ul>
             {ctx.isLoggedIn && <div className={styles.dropdown}>
-                <button onClick={() => ctx.onDropdown()}>{loginToken?.username}</button>
+                <button onClick={() => ctx.onDropdown()}>{ctx.username}</button>
                 {ctx.isDropdownActive && <div className={styles.dropdownMenu}><button onClick={() => ctx.onLogout()}>Logout</button></div>}
             </div>
             }

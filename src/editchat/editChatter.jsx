@@ -1,21 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const EditChatter = ({ chatter, onEditChatter, onCancel }) => {
-    const [editedContent, setEditedContent] = useState(chatter.content);
+    const [editedContent, setEditedContent] = useState(chatter.userinput);
 
-    useEffect(() => {
-        setEditedContent(chatter.content);
-    }, [chatter]);
-
-    const handleEditChatter = () => {
+    const handleEditChatter = async () => {
         if (editedContent.trim() !== '') {
             const updatedChatter = {
                 ...chatter,
-                content: editedContent,
+                userinput: editedContent,
             };
-            onEditChatter(updatedChatter);
+    
+            try {
+                const response = await fetch(`http://localhost:4000/api/contents/${chatter._id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updatedChatter)
+                });
+                const data = await response.json();
+    
+                if (response.ok) {
+                    console.log('Chatter updated successfully');
+                    console.log(data);
+                    onEditChatter(updatedChatter);
+                } else {
+                    throw new Error(data.message || 'Failed to update chatter');
+                }
+            } catch (err) {
+                console.log(err.message);
+            }
         }
     };
+    
 
     return (
         <div>

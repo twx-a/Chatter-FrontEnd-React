@@ -6,13 +6,15 @@ const UserContext = React.createContext({
     onLogout: () => {},
     onLogin: () => {},
     onDropdown: () => {},
-    username: ''
+    username: '',
+    userId: ''
 });
 
 export const UserContextProvider = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isDropdownActive, setIsDropdownActive] = useState(false);
     const [username, setUsername] = useState('');
+    const [userId, setUserId] = useState('');
 
     const logoutHandler = () => {
         console.log('Logging out');
@@ -21,18 +23,15 @@ export const UserContextProvider = (props) => {
         localStorage.removeItem('token');
     };
 
-    const loginHandler = (prop) => {
+    const loginHandler = (userName, userId) => {
         setIsLoggedIn(true);
         setIsDropdownActive(false);
-        setUsername(prop);
+        setUsername(userName);
+        setUserId(userId);
     };
 
     const dropDownHandler = () => {
         setIsDropdownActive(!isDropdownActive);
-    };
-
-    const getUserName = () => {
-        return username;
     };
     
     const contextValue = {
@@ -41,7 +40,8 @@ export const UserContextProvider = (props) => {
         onLogout: logoutHandler,
         onLogin: loginHandler,
         onDropdown: dropDownHandler,
-        username: getUserName
+        username: username,
+        userId: userId
     };
 
     return (
