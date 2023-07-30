@@ -4,7 +4,7 @@ import styles from './navbar.module.css';
 import Login from '../users/login.jsx';
 import UserContext from '../contexts/UserContext';
 
-const Navbar = () => {
+const Navigation = () => {
     const ctx = useContext(UserContext);
 
     // useEffect(() => {
@@ -15,17 +15,17 @@ const Navbar = () => {
     return (
         <nav className={styles.navbar}>
             <ul>
-                <li>
-                    <Link to="/">Chatter</Link>
+                <li className={styles.navitem}>
+                    <Link to="/" className={styles.navlink}>Chatter</Link>
                 </li>
                 {!ctx.isLoggedIn &&
-                <li>
-                    <Link to="/register">Register</Link>
+                <li className={styles.navitem}>
+                    <Link to="/register" className={styles.navlink}>Register</Link>
                 </li>
                 }
                 {ctx.isLoggedIn &&
-                <li>
-                    <Link to="/Profile">Profile</Link>
+                <li className={styles.navitem}>
+                    <Link to="/Profile" className={styles.navlink}>Profile</Link>
                 </li>
                 }
             </ul>
@@ -42,7 +42,7 @@ const Navbar = () => {
                 </div>
             }
         </nav>
-    )
+    );
 };
 
-export default Navbar;
+export default Navigation;

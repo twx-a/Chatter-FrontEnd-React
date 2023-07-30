@@ -1,12 +1,21 @@
-import React from 'react';
 import { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 const NewUser = () => {
 
     const handleNewUser = async (e) => {
         e.preventDefault();
-        console.log('username: ' + username);
-        console.log('password: ' + password);
+        if (username.length < 3) {
+            alert('Username must be at least 3 characters');
+            return;
+        }
+        if (password.length < 6) {
+            alert('Password must be at least 6 characters');
+            return;
+        }
+
+
         try {
             const response = await fetch('http://localhost:4000/api/users/register', {
                 method: 'POST',
@@ -47,16 +56,23 @@ const NewUser = () => {
 
     return (
         <div>
-            <h1>New User</h1>
-            <form onSubmit={handleNewUser}>
-                <label htmlFor="name">Name</label>
-                <input type="text" id="name" name="name" value={username} onChange={handleNameChange} />
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange} />
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-    )
-}
+            <h1 className='mt-2'>New User</h1>
+            <Form className='m-5' onSubmit={handleNewUser}>
+                <Form.Group controlId="formName">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control type="text" placeholder="Enter username" value={username} onChange={handleNameChange} />
+                </Form.Group>
 
+                <Form.Group controlId="formPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
+                </Form.Group>
+
+                <Button className='mt-3' variant="primary" type="submit">
+                    Submit
+                </Button>
+            </Form>
+        </div>
+    );
+};
 export default NewUser;
