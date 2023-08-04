@@ -23,7 +23,7 @@ const NewChatter = ({ onNewChatter, onCancel }) => {
             const data = await response.json();
             if (response.ok) {
                 setCategories(data.categories);
-                console.log(data.categories);
+                setCategories(data.categories[0]._id);  // Set the default category to the first one
             }
             else {
                 throw new Error(data.message || 'Failed to fetch categories');
@@ -36,7 +36,7 @@ const NewChatter = ({ onNewChatter, onCancel }) => {
     const handleNewChatter = async () => {
         let newChatter = {};
 
-        if (newContent.trim() !== '' && seletectedCategory.trim() !== '') {
+        if (newContent.trim() !== '') {
             newChatter = {
                 userinput: newContent,
                 categoryId: seletectedCategory,
@@ -45,6 +45,7 @@ const NewChatter = ({ onNewChatter, onCancel }) => {
             };
         }
         try {
+            console.log(JSON.stringify(newChatter));
             // Send a POST request to create a new chatter/post
             const response = await fetch('http://localhost:4000/api/contents/createcontent', {
                 method: 'POST',

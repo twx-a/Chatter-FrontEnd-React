@@ -97,6 +97,9 @@ const Chatter = () => {
                     </div>
                     {/* Check if the post username is same as the current logged in user */}
                     <div className={styles["button-container"]}>
+                        {/* <div className={styles["category"]}>
+                            <p className={styles["post-content"]}>Category: {chatter.categoryId.categoryname}</p>
+                        </div> */}
                         {chatter.userId.username === ctx.username && (
                             <>
                                 <button className={styles.button} onClick={() => handleEditChatter(chatter)}>Edit</button>
