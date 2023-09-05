@@ -28,6 +28,9 @@ const Navigation = () => {
                     <Link to="/Profile" className={styles.navlink}>Profile</Link>
                 </li>
                 }
+                <li className={styles.navitem}>
+                    <Link to="/about" className={styles.navlink}>About</Link>
+                </li>
             </ul>
             {ctx.isLoggedIn && <div className={styles.dropdown}>
                 <button onClick={() => ctx.onDropdown()}>{ctx.username}</button>

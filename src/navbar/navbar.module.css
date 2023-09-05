@@ -1,5 +1,5 @@
 .navbar {
-    background-color: #007bff;
+    border-bottom: 1px solid red;
     padding: 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
@@ -18,17 +18,16 @@
 }
 
 .navitem:hover {
-    color: #fff;
     cursor: pointer;
-    text-shadow: #ff3 0px 0px 10px;
 }
 
 .navitem:active {
     transform: scale(0.9);
+    color: #ffc;
 }
 
 .navlink {
-    color: #fff;
+    color: red;
     text-decoration: none;
     padding: 0;
     margin: 0;
