@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, Fragment } from 'react';
 import NewChatter from './newchat/newChatter';
 import EditChatter from './editchat/editChatter';
 import DeleteChatter from './deletechat/deleteChatter';
@@ -19,7 +19,7 @@ const Chatter = () => {
                 const response = await fetch('http://localhost:4000/api/contents/', {
                     method: 'GET',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     }
                 });
                 const data = await response.json();
@@ -74,19 +74,19 @@ const Chatter = () => {
     };
 
     return (
-        <div className={styles["main-container"]}>
+        <div className="container">
             <h1>Chatter</h1>
             {ctx.isLoggedIn && (
-            <button className={styles.button} onClick={() => setShowNewChat(true)}>New Chatter</button>
+                <button className="btn btn-primary my-2" onClick={() => setShowNewChat(true)}>New Chatter</button>
             )}
 
             {
-            // handle new chat
+                // handle new chat
                 showNewChat && (
-                <NewChatter onNewChatter={handleNewChatter} onCancel={() => setShowNewChat(false)} />
-            )
+                    <NewChatter onNewChatter={handleNewChatter} onCancel={() => setShowNewChat(false)} />
+                )
             }
-            
+
 
             {/* Mapping fetched data.content from chatter */}
             {chatters.map((chatter) => (
@@ -94,16 +94,30 @@ const Chatter = () => {
                     <div>
                         <p className={styles["post-content"]}>{chatter.userinput}</p>
                         <p className={styles["post-content"]}>By: {chatter.userId.username}</p>
+                        <p>Comments:</p>
+                        {/* Mapping fetched data.comments from chatter */}
+                        {/* if comments don't exist return empty. */}
+                        <div>
+                            {chatter.commentId.length === 0 || chatter.commentId === null  ? (
+                                <p>No comments, Login or register and be the first to comment now!</p>
+                            ) : (
+                                chatter.commentId.map((comment, index) => (
+                                    <Fragment key={index}>
+                                        <p>@{comment.userId.username}: {comment.comments}</p>
+                                    </Fragment>
+                                ))
+                            )}
+                        </div>
                     </div>
                     {/* Check if the post username is same as the current logged in user */}
                     <div className={styles["button-container"]}>
-                        {/* <div className={styles["category"]}>
-                            <p className={styles["post-content"]}>Category: {chatter.categoryId.categoryname}</p>
+                        {/* <div>
+                            <p>Category: {chatter.categoryId.categoryname}</p>
                         </div> */}
                         {chatter.userId.username === ctx.username && (
                             <>
-                                <button className={styles.button} onClick={() => handleEditChatter(chatter)}>Edit</button>
-                                <button className={styles.button} onClick={() => setDeleteChatter(chatter)}>Delete</button>
+                                <button className="btn btn-primary" onClick={() => handleEditChatter(chatter)}>Edit</button>
+                                <button className="btn btn-primary" onClick={() => setDeleteChatter(chatter)}>Delete</button>
                             </>
                         )}
                     </div>

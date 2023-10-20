@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './navbar.module.css';
 import Login from '../users/login.jsx';
 import UserContext from '../contexts/UserContext';
@@ -16,20 +16,20 @@ const Navigation = () => {
         <nav className={styles.navbar}>
             <ul>
                 <li className={styles.navitem}>
-                    <Link to="/" className={styles.navlink}>Chatter</Link>
+                    <NavLink to="/" className={styles.navlink}>Chatter</NavLink>
                 </li>
                 {!ctx.isLoggedIn &&
                 <li className={styles.navitem}>
-                    <Link to="/register" className={styles.navlink}>Register</Link>
+                    <NavLink to="/register" className={styles.navlink}>Register</NavLink>
                 </li>
                 }
                 {ctx.isLoggedIn &&
                 <li className={styles.navitem}>
-                    <Link to="/Profile" className={styles.navlink}>Profile</Link>
+                    <NavLink to="/Profile" className={styles.navlink}>Profile</NavLink>
                 </li>
                 }
                 <li className={styles.navitem}>
-                    <Link to="/about" className={styles.navlink}>About</Link>
+                    <NavLink to="/about" className={styles.navlink}>About</NavLink>
                 </li>
             </ul>
             {ctx.isLoggedIn && <div className={styles.dropdown}>

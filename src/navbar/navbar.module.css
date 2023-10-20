@@ -17,21 +17,13 @@
     margin: 0 0.5rem;
 }
 
-.navitem:hover {
-    cursor: pointer;
-}
-
-.navitem:active {
-    transform: scale(0.9);
-    color: #ffc;
-}
-
 .navlink {
     color: red;
     text-decoration: none;
     padding: 0;
     margin: 0;
 }
+
 
 .navbar button {
     background-color: #fff;

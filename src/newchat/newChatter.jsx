@@ -23,7 +23,6 @@ const NewChatter = ({ onNewChatter, onCancel }) => {
             const data = await response.json();
             if (response.ok) {
                 setCategories(data.categories);
-                setCategories(data.categories[0]._id);  // Set the default category to the first one
             }
             else {
                 throw new Error(data.message || 'Failed to fetch categories');
@@ -79,15 +78,16 @@ const NewChatter = ({ onNewChatter, onCancel }) => {
     return (
         <div>
             <h2>New Chatter</h2>
-            <div>
+            <div className='col-6'>
                 <input
                     type="text"
+                    className='form-control my-3'
                     value={newContent}
                     onChange={(e) => setNewContent(e.target.value)}
                     placeholder="Enter content"
                 />
                 {categories.length > 0 && (
-                    <select onChange={(e) => setSelectedCategory(e.target.value)}>
+                    <select className='form-control my-3' onChange={(e) => setSelectedCategory(e.target.value)}>
                         {categories.map((category) => (
                             <option key={category._id} value={category._id}>
                                 {category.categoryname}
@@ -96,9 +96,9 @@ const NewChatter = ({ onNewChatter, onCancel }) => {
                     </select>
                 )}
             </div>
-            <div>
-                <button onClick={handleNewChatter}>Create Chatter</button>
-                <button onClick={onCancel}>Cancel</button>
+            <div className='my-3'>
+                <button className ='btn btn-success' onClick={handleNewChatter}>Create Chatter</button>
+                <button className = 'btn btn-danger mx-2' onClick={onCancel}>Cancel</button>
             </div>
         </div>
     );

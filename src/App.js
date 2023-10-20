@@ -16,7 +16,7 @@ const App = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/register" element={<Register />} />
             <Route path="/about" element={<About />} />
-            <Route path="*" element={<h1>404</h1>} />
+            <Route path="*" element={<h1>404. That's a not found</h1>} />
           </Routes>
         </div>
       </Router>
