@@ -2,8 +2,14 @@ import React, { useEffect, useState, useContext, Fragment } from 'react';
 import NewChatter from './newchat/newChatter';
 import EditChatter from './editchat/editChatter';
 import DeleteChatter from './deletechat/deleteChatter';
+import NewComment from './newcomment/newComment';
 import styles from './chatter.module.css';
 import UserContext from './contexts/UserContext';
+import Modal from 'react-bootstrap/Modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComment, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
+
+
 
 const Chatter = () => {
 
@@ -11,6 +17,9 @@ const Chatter = () => {
     const [showNewChat, setShowNewChat] = useState(false);
     const [editChatter, setEditChatter] = useState(null);
     const [deleteChatter, setDeleteChatter] = useState(null);
+    const [showComment, setShowComment] = useState(false);
+    const handleCloseComment = () => setShowComment(false);
+    const handleShowComment = () => setShowComment(true);
     const ctx = useContext(UserContext);
 
     useEffect(() => {
@@ -98,7 +107,7 @@ const Chatter = () => {
                         {/* Mapping fetched data.comments from chatter */}
                         {/* if comments don't exist return empty. */}
                         <div>
-                            {chatter.commentId.length === 0 || chatter.commentId === null  ? (
+                            {chatter.commentId.length === 0 || chatter.commentId === null ? (
                                 <p>No comments, Login or register and be the first to comment now!</p>
                             ) : (
                                 chatter.commentId.map((comment, index) => (
@@ -116,8 +125,17 @@ const Chatter = () => {
                         </div> */}
                         {chatter.userId.username === ctx.username && (
                             <>
-                                <button className="btn btn-primary" onClick={() => handleEditChatter(chatter)}>Edit</button>
-                                <button className="btn btn-primary" onClick={() => setDeleteChatter(chatter)}>Delete</button>
+                                <button className="btn btn-primary" onClick={() => handleEditChatter(chatter)}><FontAwesomeIcon icon={faPencil} /> Edit Post</button>
+                                <button className="btn btn-primary" onClick={() => setDeleteChatter(chatter)}><FontAwesomeIcon icon={faTrash} /> Delete Post</button>
+                                <button type="button" className='btn btn-primary' onClick={handleShowComment}><FontAwesomeIcon icon={faComment} /> New Comment</button>
+                                <Modal show={showComment} onHide={handleCloseComment}>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>New Comment</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        <NewComment chatter={chatter} />
+                                    </Modal.Body>
+                                </Modal>
                             </>
                         )}
                     </div>
